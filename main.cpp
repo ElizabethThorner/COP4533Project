@@ -1,18 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <random> 
+#include <random>
+#include <queue>
 
 void Task1 (std::vector<std::vector<int>>& stocks) {
     int profit = 0;
     int stock = 0;
     int buyDay = 0;
     int sellDay = 0;
-    for (int i = 0; i < stocks.size(); i++) {
-        for (int j = 0; j < stocks[i].size() - 1; j++) {
-            int buy = stocks[i][j];
-            for (int k = j + 1; k < stocks[i].size(); k++) {
-                int tempProfit = stocks[i][k] - buy;
+    for (int i = 0; i < stocks.size(); i++) { //This loops through the stocks
+        for (int j = 0; j < stocks[i].size() - 1; j++) { //This loops through the potential buy days
+            int buy = stocks[i][j]; //Buy day stock price
+            for (int k = j + 1; k < stocks[i].size(); k++) { //This loops through the potential sell days
+                int tempProfit = stocks[i][k] - buy; //Sell day stock price minus buy day stock price
                 if (tempProfit > profit) {
                     profit = tempProfit;
                     stock = i;
@@ -26,7 +27,29 @@ void Task1 (std::vector<std::vector<int>>& stocks) {
 }
 
 void Task2(std::vector<std::vector<int>>& stocks) {
-
+    int profit = 0;
+    int stock = 0;
+    int buyDay = 0;
+    int sellDay = 0;
+    for (int i = 0; i < stocks.size(); i++) {
+        std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> orderedPrices;
+        /*The priority queue stores pairs of ints, the first being the stock price and the second being the day index,
+    and orders them so that the smallest stock price is at the top */
+        for (int j = 0; j < stocks[i].size(); j++) {
+            if (!orderedPrices.empty()) {
+                int tempProfit = stocks[i][j] - orderedPrices.top().first;
+                //tempProfit stores the current stock price subtracted by the smallest stock price stored for this stock
+                if (tempProfit > profit) {
+                    profit = tempProfit;
+                    stock = i;
+                    buyDay = orderedPrices.top().second;
+                    sellDay = j;
+                }
+                orderedPrices.push(std::make_pair(stocks[i][j], j));
+            }
+        }
+    }
+    std::cout << stock << " " << buyDay << " " << sellDay << std::endl;
 }
 
 void Task3a(std::vector<std::vector<int>>& stocks) {
