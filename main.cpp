@@ -19,6 +19,8 @@ void Task3b(std::vector<std::vector<int>>& stocks) {
 
 void Task4(std::vector<std::vector<int>>& stocks, int k) {
 
+    
+
 }
 
 void Task5(std::vector<std::vector<int>>& stocks, int k) {
