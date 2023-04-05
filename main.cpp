@@ -1,8 +1,28 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <random> 
 
 void Task1 (std::vector<std::vector<int>>& stocks) {
-
+    int profit = 0;
+    int stock = 0;
+    int buyDay = 0;
+    int sellDay = 0;
+    for (int i = 0; i < stocks.size(); i++) {
+        for (int j = 0; j < stocks[i].size() - 1; j++) {
+            int buy = stocks[i][j];
+            for (int k = j + 1; k < stocks[i].size(); k++) {
+                int tempProfit = stocks[i][k] - buy;
+                if (tempProfit > profit) {
+                    profit = tempProfit;
+                    stock = i;
+                    buyDay = j;
+                    sellDay = k;
+                }
+            }
+        }
+    }
+    std::cout << stock << " " << buyDay << " " << sellDay << std::endl;
 }
 
 void Task2(std::vector<std::vector<int>>& stocks) {
@@ -29,9 +49,8 @@ void Task6(std::vector<std::vector<int>>& stocks, int k) {
 
 }
 
-int main() {
-    std::string taskInput;
-    std::getline(std::cin, taskInput);  //This takes in the argument indicating the task to be executed
+int main(int argc, char *argv[]) {
+    std::string taskInput = argv[0]; //This takes in the argument indicating the task to be executed
     int k = 0;
     if ((taskInput == "Stocks 4") || (taskInput == "Stocks 5") || (taskInput == "Stocks 6")) { //Because k is only used for Problem 2
         std::cin >> k; //This takes in line 1 of the input for Problem 2
