@@ -32,21 +32,23 @@ void Task2(std::vector<std::vector<int>>& stocks) {
     int buyDay = 0;
     int sellDay = 0;
     for (int i = 0; i < stocks.size(); i++) {
-        std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> orderedPrices;
-        /*The priority queue stores pairs of ints, the first being the stock price and the second being the day index,
-    and orders them so that the smallest stock price is at the top */
+        int minPrice = INT_MAX; 
+        int minIndex = -1;
+        //minPrice and minIndex values are placeholders
         for (int j = 0; j < stocks[i].size(); j++) {
-            if (!orderedPrices.empty()) {
-                int tempProfit = stocks[i][j] - orderedPrices.top().first;
-                //tempProfit stores the current stock price subtracted by the smallest stock price stored for this stock
-                if (tempProfit > profit) {
-                    profit = tempProfit;
-                    stock = i;
-                    buyDay = orderedPrices.top().second;
-                    sellDay = j;
-                }
-                orderedPrices.push(std::make_pair(stocks[i][j], j));
-            }
+            int tempProfit = stocks[i][j] - minPrice;
+            //tempProfit stores the current stock price subtracted by the smallest stock price stored for this stock
+            if (tempProfit < 0) { 
+                /* If tempProfit is less than zero then stocks[i][j] is less than minPrice.
+                 This will always be true on the first loop */
+                minPrice = stocks[i][j];
+                minIndex = j;
+            } else if (tempProfit > profit) { 
+                profit = tempProfit;
+                stock = i;
+                buyDay = minIndex;
+                sellDay = j;
+            } 
         }
     }
     std::cout << stock << " " << buyDay << " " << sellDay << std::endl;
