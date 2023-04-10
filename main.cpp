@@ -73,27 +73,29 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
         int buyDay = 0;
         int sellDay = 0;
         
-
         for(int i = 0; i < stocks.size(); i++){
                 for(int j = 0; j < stocks[i].size(); j++){
                     int buy = stocks[i][j];
-                    for(int s = j + 1; s < stocks[i].size(); s++){
+                    for(int s = j + 1; s < stocks[i].size(); s++) {
                         int tempProfit = stocks[i][s] - buy;
-                        if(tempProfit > profit){
-
-                            //need to ensure that the buy and sell days dont intersect,
+                        if(tempProfit > profit) {
                             //can only have 1 stock at a time
-                            //if(std::find(get<0>(vecTrans).find(); )){
                             profit = tempProfit;
                             stock = i;
                             buyDay = j;
                             sellDay = s;
-                            //}
-
+                            bool addCheck = true;
+                            for (v : vecTrans) { //Need to ensure that the buy and sell days dont intersect, because we can only hold one stock at a time
+                                if ((buyDay > v[1] || sellDay > v[1]) || (buyDay < v[2] || sellDay < v[2])) {
+                                    addCheck = false;
+                                }
+                            }
+                            if (addCheck) {
+                                vecTrans.push_back(std::make_tuple(stock, buyDay, sellDay));  
+                            }
                         }
                     }
-                }
-                
+                } 
             }
 
         //int loop = vecTrans.size();
