@@ -64,56 +64,43 @@ void Task3b(std::vector<std::vector<int>>& stocks) {
 }
 
 void Task4(std::vector<std::vector<int>>& stocks, int k) {
-
     std::vector<std::tuple<int, int, int>> vecTrans;
 
-    for(int numTransact = 1; numTransact < k; numTransact++){
+    for (int numTransact = 1; numTransact < k; numTransact++) {
         int profit = 0;
         int stock = 0;
         int buyDay = 0;
         int sellDay = 0;
-        
-        for(int i = 0; i < stocks.size(); i++){
-                for(int j = 0; j < stocks[i].size(); j++){
-                    int buy = stocks[i][j];
-                    for(int s = j + 1; s < stocks[i].size(); s++) {
-                        int tempProfit = stocks[i][s] - buy;
-                        if(tempProfit > profit) {
-                            //can only have 1 stock at a time
+
+        for (int i = 0; i < stocks.size(); i++) {
+            for (int j = 0; j < stocks[i].size(); j++) {
+                int buy = stocks[i][j];
+                for (int s = j + 1; s < stocks[i].size(); s++) {
+                    int tempProfit = stocks[i][s] - buy;
+                    if (tempProfit > profit) {
+                        bool addCheck = true;
+                        for (auto&& v : vecTrans) { //Need to ensure that the buy and sell days don't intersect, because we can only hold one stock at a time
+                            if ((buyDay >= std::get<1>(v) && buyDay <= std::get<2>(v)) || (sellDay >= std::get<1>(v) && sellDay <= std::get<2>(v))) {
+                                addCheck = false;
+                            }
+                        }
+                        if (addCheck) {
                             profit = tempProfit;
                             stock = i;
                             buyDay = j;
                             sellDay = s;
-                            bool addCheck = true;
-                            for (auto&& v : vecTrans) { //Need to ensure that the buy and sell days dont intersect, because we can only hold one stock at a time
-                                if ((buyDay > v[1] || sellDay > v[1]) || (buyDay < v[2] || sellDay < v[2])) {
-                                    addCheck = false;
-                                }
-                            }
-                            if (addCheck) {
-                                vecTrans.push_back(std::make_tuple(stock, buyDay, sellDay));  
-                            }
                         }
                     }
-                } 
+                }
             }
-
-        //int loop = vecTrans.size();
-
-        vecTrans.push_back(std::make_tuple(stock, buyDay, sellDay));
-
-        // for(){
-        //     loop--;
-        // }
-        
+        }
+        vecTrans.emplace_back(stock, buyDay, sellDay);
     }
     
-
-    //output the transactions and by how many
-    for(int numTransact = 1; numTransact < k; numTransact++){
-        std::cout << stock << " " << buyDay << " " << sellDay << std::endl;
+    for(auto&& v : vecTrans){
+        std::cout << std::get<0>(v)  << " " << std::get<1>(v) << " " << std::get<2>(v) << std::endl;
+        //This prints the stock, buy day, and sell day
     }
-
 }
 
 void Task5(std::vector<std::vector<int>>& stocks, int k) {
