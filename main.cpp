@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <random>
+#include <random> 
+#include <tuple>
+#include <algorithm>
 
 void Task1 (std::vector<std::vector<int>>& stocks) {
     int profit = 0;
@@ -62,6 +64,57 @@ void Task3b(std::vector<std::vector<int>>& stocks) {
 }
 
 void Task4(std::vector<std::vector<int>>& stocks, int k) {
+
+    int profit = 0;
+    int stock = 0;
+    int buyDay = 0;
+    int sellDay = 0;
+    std::vector<std::tuple<int, int, int>> vecTrans;
+
+    for(int numTransact = 1; numTransact < k; numTransact++){
+
+        for(int i = 0; i < stocks.size(); i++){
+                for(int j = 0; j < stocks[i].size(); j++){
+                    int buy = stocks[i][j];
+                    for(int s = j + 1; s < stocks[i].size(); s++){
+                        int tempProfit = stocks[i][j] - buy;
+                        if(tempProfit > profit){
+
+                            //need to ensure that the buy and sell days dont intersect,
+                            //can only have 1 stock at a time
+                            //if(std::find(get<0>(vecTrans).find(); )){
+                            profit = tempProfit;
+                            stock = i;
+                            buyDay = j;
+                            sellDay = s;
+                            //}
+
+                        }
+                    }
+                }
+                
+            }
+
+        //int loop = vecTrans.size();
+
+        vecTrans.push_back(std::make_tuple(stock, buyDay, sellDay));
+
+        profit = 0;
+        stock = 0;
+        buyDay = 0;
+        sellDay = 0;
+
+        // for(){
+        //     loop--;
+        // }
+        
+    }
+    
+
+    //output the transactions and by how many
+    for(int numTransact = 1; numTransact < k; numTransact++){
+        std::cout << stock << " " << buyDay << " " << sellDay << "\n" << std::endl;
+    }
 
 }
 
