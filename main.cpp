@@ -78,7 +78,7 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
                 for(int j = 0; j < stocks[i].size(); j++){
                     int buy = stocks[i][j];
                     for(int s = j + 1; s < stocks[i].size(); s++){
-                        int tempProfit = stocks[i][j] - buy;
+                        int tempProfit = stocks[i][s] - buy;
                         if(tempProfit > profit){
 
                             //need to ensure that the buy and sell days dont intersect,
@@ -109,7 +109,7 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
 
     //output the transactions and by how many
     for(int numTransact = 1; numTransact < k; numTransact++){
-        std::cout << stock << " " << buyDay << " " << sellDay << "\n" << std::endl;
+        std::cout << stock << " " << buyDay << " " << sellDay << std::endl;
     }
 
 }
