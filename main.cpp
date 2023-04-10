@@ -64,9 +64,9 @@ void Task3b(std::vector<std::vector<int>>& stocks) {
 }
 
 void Task4(std::vector<std::vector<int>>& stocks, int k) {
-    std::vector<std::tuple<int, int, int>> vecTrans;
+    std::vector<std::tuple<int, int, int>> vecTrans; //This stores the stock, buy day, and sell day values for different transactions
 
-    for (int numTransact = 1; numTransact < k; numTransact++) {
+    for (int numTransact = 0; numTransact < k; numTransact++) {
         int profit = 0;
         int stock = 0;
         int buyDay = 0;
@@ -79,7 +79,9 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
                     int tempProfit = stocks[i][s] - buy;
                     if (tempProfit > profit) {
                         bool addCheck = true;
-                        for (auto&& v : vecTrans) { //Need to ensure that the buy and sell days don't intersect, because we can only hold one stock at a time
+                        for (auto&& v : vecTrans) { 
+                            //Need to ensure that the buy and sell days don't intersect with 
+                            //what was stored for any previous transaction, because we can only hold one stock at a time
                             if ((buyDay >= std::get<1>(v) && buyDay <= std::get<2>(v)) || (sellDay >= std::get<1>(v) && sellDay <= std::get<2>(v))) {
                                 addCheck = false;
                             }
@@ -99,7 +101,7 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
     
     for(auto&& v : vecTrans){
         std::cout << std::get<0>(v)  << " " << std::get<1>(v) << " " << std::get<2>(v) << std::endl;
-        //This prints the stock, buy day, and sell day
+        //This prints the stock, buy day, and sell day for each transaction
     }
 }
 
