@@ -85,7 +85,7 @@ void Task4(std::vector<std::vector<int>>& stocks, int k) {
                             buyDay = j;
                             sellDay = s;
                             bool addCheck = true;
-                            for (v : vecTrans) { //Need to ensure that the buy and sell days dont intersect, because we can only hold one stock at a time
+                            for (auto&& v : vecTrans) { //Need to ensure that the buy and sell days dont intersect, because we can only hold one stock at a time
                                 if ((buyDay > v[1] || sellDay > v[1]) || (buyDay < v[2] || sellDay < v[2])) {
                                     addCheck = false;
                                 }
