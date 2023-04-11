@@ -60,6 +60,23 @@ void Task3a(std::vector<std::vector<int>>& stocks) {
 }
 
 void Task3b(std::vector<std::vector<int>>& stocks) {
+    int profit = 0;
+    int stock = 0;
+    int buyDay = 0;
+    int sellDay = 0;
+    for (int i = 0; i < stocks.size(); i++) {
+        std::vector<int> differences(stocks.size() - 1);
+        for (int j = 0; j < stocks[i].size() - 1; j++) {
+            differences[i] = stocks[i][j + 1] - stocks[i][j];
+        }
+        int localMax = 0;
+        int max = 0;
+        for (int j = 0; j < differences.size(); j++) {
+            localMax = std::max(differences[i], differences[i] + localMax);
+            if ()
+
+        }
+    }
 
 }
 
