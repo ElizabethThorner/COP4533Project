@@ -60,7 +60,7 @@ void Task3a(std::vector<std::vector<int>>& stocks) {
 }
 
 void Task3b(std::vector<std::vector<int>>& stocks) {
-    int profit = 0;
+    /*int profit = 0;
     int stock = 0;
     int buyDay = 0;
     int sellDay = 0;
@@ -76,7 +76,7 @@ void Task3b(std::vector<std::vector<int>>& stocks) {
             if ()
 
         }
-    }
+    }*/
 
 }
 
